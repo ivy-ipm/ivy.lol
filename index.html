@@ -88,20 +88,26 @@ let idx=0;
 function typeWriter(){ if(idx<introText.length){ introSpan.textContent+=introText.charAt(idx); idx++; setTimeout(typeWriter,100); } }
 typeWriter();
 
-// Click works immediately & forces play
-const intro=document.getElementById('intro');
-const bgVideo=document.getElementById('bg-video');
-const bgMusic=document.getElementById('bg-music');
-const cardContainer=document.querySelector('.card-container');
+// Click works immediately & plays audio reliably
+document.getElementById('intro').addEventListener('click', ()=>{
+    const bgVideo=document.getElementById('bg-video');
+    const bgMusic=document.getElementById('bg-music');
+    const cardContainer=document.querySelector('.card-container');
 
-intro.addEventListener('click',()=>{
     bgVideo.style.display='block';
     cardContainer.style.display='flex';
     setTimeout(()=>{ cardContainer.style.opacity='1'; },50);
-    intro.remove();
-    bgVideo.muted=true;
+    document.getElementById('intro').remove();
+
+    bgVideo.muted = true;
     bgVideo.play().catch(()=>{});
-    bgMusic.play().catch(()=>{});
+
+    // Force audio to start on click
+    bgMusic.volume = 0.5;
+    const playAudio = bgMusic.play();
+    if(playAudio !== undefined){
+        playAudio.then(()=>{}).catch(err=>{console.log('Audio play failed', err);});
+    }
 });
 </script>
 </body>
