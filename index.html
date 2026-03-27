@@ -7,13 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-html, body{width:100%;height:100%;overflow:hidden;background:#000;}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 #intro{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;text-transform:lowercase;background:#000;position:fixed;top:0;left:0;z-index:10;}
 #intro span{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;}
+#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;display:none;}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:-1;display:none;}
 .card-container{display:none;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;height:100%;position:relative;padding-top:30px;gap:20px;overflow-y:auto;}
-#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;}
-.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:-1;}
 .card{position:relative;width:360px;border-radius:20px;overflow:hidden;background:rgba(20,20,20,0.7);backdrop-filter:blur(10px);box-shadow:0 0 40px rgba(0,0,0,0.6);text-align:center;padding-bottom:20px;}
 .banner{width:100%;height:130px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;}
 .profile-pic{width:100px;height:100px;border-radius:50%;border:4px solid #fff;margin:-50px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') no-repeat center/cover;}
@@ -30,13 +30,12 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 .stats{display:flex;justify-content:space-around;margin-top:15px;}
 .stat{text-align:center;}
 .stat span{display:block;font-size:1.1rem;font-weight:600;}
-audio{display:none;}
 </style>
 </head>
 <body>
 <div id="intro"><span></span></div>
 
-<video id="bg-video" autoplay muted loop>
+<video id="bg-video" loop>
   <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
 </video>
 <div class="overlay"></div>
@@ -51,7 +50,7 @@ audio{display:none;}
       <a href="https://github.com/ivy-ipm" target="_blank" class="github">GitHub</a>
       <a href="https://m.youtube.com/@ivy_ipm" target="_blank" class="youtube">YouTube</a>
     </div>
-    <div class="description">hey, im ivy, i like modding games and i love cats, uh make sure to subscribe to me on yt and u can view my repos if u want!</div>
+    <div class="description">hey, im ivy, i like modding games and i love cats, uh make sure to subscribe to me on yt and u can view my repos if you want!</div>
     <div class="stats">
       <div class="stat"><span id="views">0</span>Profile Views</div>
       <div class="stat"><span id="visitors">0</span>Visitors</div>
@@ -59,7 +58,7 @@ audio{display:none;}
   </div>
 </div>
 
-<audio autoplay loop>
+<audio id="bg-music" loop>
   <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
 </audio>
 
@@ -86,7 +85,10 @@ typeWriter();
 
 document.getElementById('intro').addEventListener('click',()=>{
   document.getElementById('intro').style.display='none';
+  document.getElementById('bg-video').style.display='block';
+  document.querySelector('.overlay').style.display='block';
   document.querySelector('.card-container').style.display='flex';
+  document.getElementById('bg-music').play();
   updateCounters();
 });
 
