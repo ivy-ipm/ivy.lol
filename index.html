@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
+<title>ivy.ipm</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
-#intro{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;text-transform:lowercase;background:#000;position:fixed;top:0;left:0;z-index:10;}
+#intro{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;text-transform:lowercase;background:#000;position:fixed;top:0;left:0;z-index:10;cursor:pointer;}
 #intro span{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;}
 #bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;display:none;}
 .card-container{display:none;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;height:100%;position:relative;padding-top:30px;gap:20px;overflow-y:auto;opacity:0;transition:opacity 1s;z-index:1;}
@@ -17,6 +17,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 .banner{width:100%;height:130px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;}
 .profile-pic{width:100px;height:100px;border-radius:50%;border:4px solid #fff;margin:-50px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') no-repeat center/cover;background-size:cover;}
 .username{font-size:1.4rem;font-weight:600;margin-bottom:5px;}
+.rainbow-header{font-size:1.5rem;font-weight:600;margin-bottom:5px;display:inline-block;}
 .discord-name{font-size:0.9rem;color:#ccc;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:5px;}
 .guild-tag{display:flex;align-items:center;gap:3px;color:#ffcc00;font-weight:500;}
 .guild-tag svg{width:14px;height:14px;}
@@ -43,7 +44,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
   <div class="card">
     <div class="banner"></div>
     <div class="profile-pic"></div>
-    <div class="username">ivy.ipm</div>
+    <div class="rainbow-header" id="header">ivy.ipm</div>
     <div class="discord-name">@ivy.ipm <span class="guild-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 8H9L12 2ZM12 22L9 16H15L12 22ZM2 12L8 15V9L2 12ZM22 12L16 9V15L22 12Z"/></svg> stuf</span></div>
     <div class="links">
       <a href="https://github.com/ivy-ipm" target="_blank" class="github">GitHub</a>
@@ -64,21 +65,24 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-// Rainbow typewriter for page title
-const titleText = "ivy.ipm";
-let titleIndex = 0;
+// Rainbow typewriter header
+const headerText = "ivy.ipm";
+const headerEl = document.getElementById("header");
 const colors = ["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
-function rainbowTitle(){
-  let display = "";
-  for(let i=0;i<=titleIndex;i++){
-    display += `<span style="color:${colors[i % colors.length]}">${titleText[i]}</span>`;
-  }
-  document.title = titleText.substring(0,titleIndex+1); // fallback text in tab
-  titleIndex++;
-  if(titleIndex<titleText.length){ setTimeout(rainbowTitle,400); } else { titleIndex=0; setTimeout(rainbowTitle,1000); }
+let hIndex = 0;
+function rainbowType(){
+    if(hIndex<headerText.length){
+        const span = document.createElement("span");
+        span.textContent = headerText[hIndex];
+        span.style.color = colors[hIndex % colors.length];
+        headerEl.appendChild(span);
+        hIndex++;
+        setTimeout(rainbowType,200);
+    }
 }
-rainbowTitle();
+rainbowType();
 
+// Firebase setup
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -91,17 +95,26 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+// Intro typewriter
 const introText = "click here to enter…";
 const introSpan = document.querySelector("#intro span");
 let idx=0;
-function typeWriter(){ if(idx<introText.length){ introSpan.textContent+=introText.charAt(idx); idx++; setTimeout(typeWriter,100); } }
+function typeWriter(){ 
+  if(idx<introText.length){ 
+    introSpan.textContent+=introText.charAt(idx); 
+    idx++; 
+    setTimeout(typeWriter,100); 
+  } 
+}
 typeWriter();
 
+// Click intro
 const bgVideo = document.getElementById('bg-video');
 const bgMusic = document.getElementById('bg-music');
 const cardContainer = document.querySelector('.card-container');
 
 document.getElementById('intro').addEventListener('click', async ()=>{
+  bgVideo.style.display='block';
   try { await bgVideo.play(); } catch(e){}
   try { await bgMusic.play(); } catch(e){}
   document.getElementById('intro').remove();
@@ -110,6 +123,7 @@ document.getElementById('intro').addEventListener('click', async ()=>{
   updateCounters();
 });
 
+// Firebase counters
 function updateCounters(){
   const viewsRef = db.ref('profile/views');
   const visitorsRef = db.ref('profile/visitors');
