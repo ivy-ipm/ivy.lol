@@ -62,17 +62,17 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 </audio>
 
 <script>
-// Rainbow typewriter for header & tab
+// Rainbow typewriter
 function rainbowTypewriter(element, text, interval, colors){
-    let i = 0;
+    let i=0;
     function step(){
         if(i<text.length){
             const span=document.createElement('span');
             span.textContent=text[i];
-            span.style.color=colors[i % colors.length];
-            if(element.tagName==='TITLE'){document.title+=text[i];}else{element.appendChild(span);}
+            span.style.color=colors[i%colors.length];
+            if(element.tagName==='TITLE'){document.title+=text[i];} else {element.appendChild(span);}
             i++;
-            setTimeout(step, interval);
+            setTimeout(step,interval);
         }
     }
     step();
@@ -88,26 +88,28 @@ let idx=0;
 function typeWriter(){ if(idx<introText.length){ introSpan.textContent+=introText.charAt(idx); idx++; setTimeout(typeWriter,100); } }
 typeWriter();
 
-// Click works immediately & plays audio reliably
-document.getElementById('intro').addEventListener('click', ()=>{
+const intro=document.getElementById('intro');
+intro.addEventListener('click', ()=>{
     const bgVideo=document.getElementById('bg-video');
     const bgMusic=document.getElementById('bg-music');
     const cardContainer=document.querySelector('.card-container');
 
+    // Show everything first
     bgVideo.style.display='block';
     cardContainer.style.display='flex';
     setTimeout(()=>{ cardContainer.style.opacity='1'; },50);
-    document.getElementById('intro').remove();
 
-    bgVideo.muted = true;
-    bgVideo.play().catch(()=>{});
+    // Play video (muted) and audio (after click)
+    bgVideo.muted=true;
+    const playVideo = bgVideo.play();
+    if(playVideo !== undefined) playVideo.catch(()=>{});
 
-    // Force audio to start on click
-    bgMusic.volume = 0.5;
+    bgMusic.volume=0.5;
     const playAudio = bgMusic.play();
-    if(playAudio !== undefined){
-        playAudio.then(()=>{}).catch(err=>{console.log('Audio play failed', err);});
-    }
+    if(playAudio !== undefined) playAudio.catch(()=>{});
+
+    // Remove intro AFTER triggering play
+    setTimeout(()=>{ intro.remove(); },50);
 });
 </script>
 </body>
