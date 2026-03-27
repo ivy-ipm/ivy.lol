@@ -35,7 +35,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 <body>
 <div id="intro"><span></span></div>
 
-<video id="bg-video" muted loop>
+<video id="bg-video" muted autoplay playsinline loop>
   <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
 </video>
 <div class="overlay"></div>
@@ -58,7 +58,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
   </div>
 </div>
 
-<audio id="bg-music" loop>
+<audio id="bg-music" preload="auto">
   <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
 </audio>
 
@@ -79,22 +79,23 @@ const db = firebase.database();
 
 const introText = "click here to enter…";
 const introSpan = document.querySelector("#intro span");
-let i=0;
-function typeWriter(){ if(i<introText.length){ introSpan.textContent+=introText.charAt(i); i++; setTimeout(typeWriter,100); } }
+let idx=0;
+function typeWriter(){ if(idx<introText.length){ introSpan.textContent+=introText.charAt(idx); idx++; setTimeout(typeWriter,100); } }
 typeWriter();
 
 const bgVideo = document.getElementById('bg-video');
 const bgMusic = document.getElementById('bg-music');
 
-document.getElementById('intro').addEventListener('click',async()=>{
+document.getElementById('intro').addEventListener('click', (evt)=>{
   document.getElementById('intro').style.display='none';
   document.querySelector('.card-container').style.display='flex';
   document.querySelector('.overlay').style.display='block';
+
   bgVideo.style.display='block';
-  bgVideo.muted = true;
-  bgVideo.play();
-  bgMusic.volume = 0.5;
-  bgMusic.play();
+  bgVideo.play();   // muted video allowed  [oai_citation:5‡HTML & CSS Code Editor](https://htmlcsseditor.com/how-to-embed-a-video-background-on-website/?utm_source=chatgpt.com)
+
+  bgMusic.play();  // audio triggered inside a real click  [oai_citation:6‡OpsBlu](https://opsblu.com/documentation/issues/accessibility/audio-video-autoplay?utm_source=chatgpt.com)
+
   updateCounters();
 });
 
