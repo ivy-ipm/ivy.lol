@@ -6,73 +6,97 @@
 <title>ivy.ipm</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
-body {
-  background: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d') no-repeat center/cover;
-  height: 100vh; display: flex; align-items: center; justify-content: center; color: #fff;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body, html{width:100%;height:100%;overflow:hidden;}
+body{
+  background:#000;
+  cursor: url('https://i.imgur.com/0W3vZgJ.png'), auto;
 }
-.overlay {
-  position:absolute; top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+#intro{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;
 }
-.card {
-  position: relative; width: 360px; border-radius: 20px; overflow: hidden;
+#intro span{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;}
+.card-container{display:none;width:100%;height:100%;align-items:center;justify-content:center;position:relative;}
+.overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);}
+.card{
+  position: relative; width:360px;border-radius:20px;overflow:hidden;
   background: rgba(20,20,20,0.7); backdrop-filter: blur(10px);
-  box-shadow: 0 0 40px rgba(0,0,0,0.6); text-align: center; padding-bottom: 20px;
+  box-shadow:0 0 40px rgba(0,0,0,0.6); text-align:center; padding-bottom:20px;
+  z-index:10;
 }
-.banner {
-  width:100%; height:130px; background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;
-}
-.profile-pic {
-  width:100px; height:100px; border-radius:50%; border:4px solid #fff;
-  margin: -50px auto 10px; background:url('https://i.pinimg.com/236x/2d/ae/71/2dae71361368255260.jpg') no-repeat center/cover;
-}
-.username { font-size:1.4rem; font-weight:600; margin-bottom:5px; }
-.links { display:flex; justify-content:center; gap:15px; margin-bottom:10px; }
-.links a { text-decoration:none; font-size:0.9rem; padding:5px 12px; border-radius:6px; color:#fff; background:rgba(255,255,255,0.1); transition:0.2s; }
-.links a:hover { background:rgba(255,255,255,0.3); }
-.youtube { background:#FF0000; color:#fff; }
-.github { background:#333; color:#fff; }
-.stats { display:flex; justify-content:space-around; margin-top:15px; }
-.stat { text-align:center; }
-.stat span { display:block; font-size:1.1rem; font-weight:600; }
-audio { display:none; }
+.banner{width:100%; height:130px; background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;}
+.profile-pic{width:100px;height:100px;border-radius:50%;border:4px solid #fff;margin:-50px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') no-repeat center/cover;}
+.username{font-size:1.4rem;font-weight:600;margin-bottom:5px;}
+.discord-name{font-size:0.9rem;color:#ccc;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:5px;}
+.guild-tag{display:flex;align-items:center;gap:3px;color:#ffcc00;font-weight:500;}
+.guild-tag svg{width:14px;height:14px;}
+.links{display:flex;justify-content:center;gap:15px;margin-bottom:10px;}
+.links a{text-decoration:none;font-size:0.9rem;padding:5px 12px;border-radius:6px;color:#fff;background:rgba(255,255,255,0.1);transition:0.2s;}
+.links a:hover{background:rgba(255,255,255,0.3);}
+.youtube{background:#FF0000;color:#fff;}
+.github{background:#333;color:#fff;}
+.description{font-size:0.85rem;color:#ddd;padding:0 15px;margin-top:10px;}
+.stats{display:flex;justify-content:space-around;margin-top:15px;}
+.stat{text-align:center;}
+.stat span{display:block;font-size:1.1rem;font-weight:600;}
+audio{display:none;}
 </style>
 </head>
 <body>
-<div class="overlay"></div>
-<div class="card">
-  <div class="banner"></div>
-  <div class="profile-pic"></div>
-  <div class="username">ivy.ipm</div>
-  <div class="links">
-    <a href="https://github.com/ivy-ipm" target="_blank" class="github">GitHub</a>
-    <a href="https://m.youtube.com/@ivy_ipm" target="_blank" class="youtube">YouTube</a>
-  </div>
-  <div class="stats">
-    <div class="stat">
-      <span id="views">0</span>
-      Profile Views
+<div id="intro"><span></span></div>
+<div class="card-container">
+  <div class="overlay"></div>
+  <div class="card">
+    <div class="banner"></div>
+    <div class="profile-pic"></div>
+    <div class="username">ivy.ipm</div>
+    <div class="discord-name">@ivy.ipm <span class="guild-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 8H9L12 2ZM12 22L9 16H15L12 22ZM2 12L8 15V9L2 12ZM22 12L16 9V15L22 12Z"/></svg> stuf</span></div>
+    <div class="links">
+      <a href="https://github.com/ivy-ipm" target="_blank" class="github">GitHub</a>
+      <a href="https://m.youtube.com/@ivy_ipm" target="_blank" class="youtube">YouTube</a>
     </div>
-    <div class="stat">
-      <span id="visitors">0</span>
-      Visitors
+    <div class="description">hey, im ivy, i like modding games and i love cats, uh make sure to subscribe to me on yt and u can view my repos if u want!</div>
+    <div class="stats">
+      <div class="stat"><span id="views">0</span>Profile Views</div>
+      <div class="stat"><span id="visitors">0</span>Visitors</div>
     </div>
   </div>
 </div>
 <audio autoplay loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-// Simple profile views & visitors simulation
-let views = parseInt(localStorage.getItem('views') || 0);
-let visitors = parseInt(localStorage.getItem('visitors') || 0);
-views += 1;
-visitors += Math.floor(Math.random()*3)+1;
-localStorage.setItem('views', views);
-localStorage.setItem('visitors', visitors);
-document.getElementById('views').innerText = views;
-document.getElementById('visitors').innerText = visitors;
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const introText = "Click here to enter…";
+const introSpan = document.querySelector("#intro span");
+let i=0;
+function typeWriter(){ if(i<introText.length){ introSpan.textContent+=introText.charAt(i); i++; setTimeout(typeWriter,100); } }
+typeWriter();
+document.getElementById('intro').addEventListener('click',()=>{
+  document.getElementById('intro').style.display='none';
+  document.querySelector('.card-container').style.display='flex';
+  updateCounters();
+});
+function updateCounters(){
+  const viewsRef = db.ref('profile/views');
+  const visitorsRef = db.ref('profile/visitors');
+  viewsRef.transaction(current => (current||0)+1);
+  visitorsRef.transaction(current => (current||0)+1);
+  viewsRef.on('value',snap=>{document.getElementById('views').textContent = snap.val();});
+  visitorsRef.on('value',snap=>{document.getElementById('visitors').textContent = snap.val();});
+}
 </script>
 </body>
 </html>
