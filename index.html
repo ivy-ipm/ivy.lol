@@ -11,7 +11,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 #intro{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;text-transform:lowercase;background:#000;position:fixed;top:0;left:0;z-index:10;}
 #intro span{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;}
-#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;display:none;}
+#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;}
 .card-container{display:none;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;height:100%;position:relative;padding-top:30px;gap:20px;overflow-y:auto;opacity:0;transition:opacity 1s;z-index:1;}
 .card{position:relative;width:360px;border-radius:20px;overflow:hidden;background:rgba(20,20,20,0.7);backdrop-filter:blur(10px);box-shadow:0 0 40px rgba(0,0,0,0.6);text-align:center;padding-bottom:20px;}
 .banner{width:100%;height:130px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;}
@@ -34,7 +34,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 <body>
 <div id="intro"><span></span></div>
 
-<video id="bg-video" muted autoplay loop playsinline>
+<video id="bg-video" muted loop playsinline>
   <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
 </video>
 
@@ -86,17 +86,16 @@ const bgMusic = document.getElementById('bg-music');
 const cardContainer = document.querySelector('.card-container');
 
 document.getElementById('intro').addEventListener('click', async ()=>{
+  // Start video and audio before removing intro
+  try { await bgVideo.play(); } catch(e){ console.log('video autoplay blocked'); }
+  try { await bgMusic.play(); } catch(e){ console.log('audio autoplay blocked'); }
+
   // Remove intro screen
   document.getElementById('intro').remove();
 
-  // Show card and fade it in
+  // Show card container
   cardContainer.style.display='flex';
   setTimeout(()=>{ cardContainer.style.opacity='1'; }, 50);
-
-  // Show background video
-  bgVideo.style.display='block';
-  try { await bgVideo.play(); } catch(e){ console.log('video autoplay blocked'); }
-  try { await bgMusic.play(); } catch(e){ console.log('audio autoplay blocked'); }
 
   updateCounters();
 });
