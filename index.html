@@ -87,11 +87,15 @@ const bgVideo = document.getElementById('bg-video');
 const bgMusic = document.getElementById('bg-music');
 
 document.getElementById('intro').addEventListener('click', async ()=>{
-  document.getElementById('intro').style.display='none';
+  // Remove intro black screen
+  const introScreen = document.getElementById('intro');
+  introScreen.parentNode.removeChild(introScreen);
+
+  // Show main content
   document.querySelector('.card-container').style.display='flex';
   document.querySelector('.overlay').style.display='block';
-
   bgVideo.style.display='block';
+
   try { await bgVideo.play(); } catch(e){ console.log('video autoplay blocked'); }
   try { await bgMusic.play(); } catch(e){ console.log('audio autoplay blocked'); }
 
