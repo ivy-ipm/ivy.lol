@@ -35,7 +35,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 <body>
 <div id="intro"><span></span></div>
 
-<video id="bg-video" loop>
+<video id="bg-video" muted loop>
   <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
 </video>
 <div class="overlay"></div>
@@ -83,12 +83,15 @@ let i=0;
 function typeWriter(){ if(i<introText.length){ introSpan.textContent+=introText.charAt(i); i++; setTimeout(typeWriter,100); } }
 typeWriter();
 
-document.getElementById('intro').addEventListener('click',()=>{
+const bgVideo = document.getElementById('bg-video');
+const bgMusic = document.getElementById('bg-music');
+
+document.getElementById('intro').addEventListener('click',async()=>{
   document.getElementById('intro').style.display='none';
-  document.getElementById('bg-video').style.display='block';
-  document.querySelector('.overlay').style.display='block';
   document.querySelector('.card-container').style.display='flex';
-  document.getElementById('bg-music').play();
+  document.querySelector('.overlay').style.display='block';
+  bgVideo.style.display='block';
+  try{ await bgVideo.play(); await bgMusic.play(); } catch(e){ console.log('Autoplay blocked'); }
   updateCounters();
 });
 
