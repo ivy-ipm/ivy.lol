@@ -8,9 +8,10 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;}
-#intro{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;z-index:10;cursor:pointer;}
+#intro{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;position:fixed;top:0;left:0;z-index:10;font-size:1.1rem;text-transform:lowercase;}
+#intro span{border-right:2px solid #fff;}
 #bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;display:none;z-index:0;}
-.card-container{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;z-index:1;position:relative;opacity:0;transition:1s;}
+.card-container{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;position:relative;opacity:0;transition:1s;z-index:1;}
 .card{width:340px;border-radius:20px;background:rgba(20,20,20,0.7);backdrop-filter:blur(10px);text-align:center;padding-bottom:20px;}
 .banner{height:120px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') center/cover;}
 .profile{width:90px;height:90px;border-radius:50%;margin:-45px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') center/cover;border:3px solid #fff;}
@@ -22,14 +23,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 </head>
 <body>
 
-<div id="intro">click here to enter…</div>
+<div id="intro"><span></span></div>
 
 <video id="bg-video" loop muted playsinline>
-<source src="https://cdn.pixabay.com/vimeo/599784397/Beach%20Waves%20Loop%20-%2019143.mp4?width=1280&hash=3fdaf811a68bf1f4409c72042a64d3a68f691486" type="video/mp4">
+<source src="https://cdn.pixabay.com/vimeo/617986918/Calm-Ocean-Waves-Loop-1920x1080.mp4?width=1280&hash=bbd7b9188e3f9f57b9f8c5d73b50c5a0a9f3d2d2" type="video/mp4">
 </video>
 
-<audio id="bg-music" loop>
-<source src="https://pixabay.com/static/uploads/audio/2025/07/21/soft-calm-background-music-376497.mp3" type="audio/mpeg">
+<audio id="bg-music" loop muted>
+<source src="https://pixabay.com/static/uploads/audio/2022/03/04/soft-relaxing-ambient-music-10923.mp3" type="audio/mpeg">
 </audio>
 
 <div class="card-container" id="main">
@@ -42,33 +43,30 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 <a href="https://github.com/ivy-ipm" target="_blank">GitHub</a>
 <a href="https://m.youtube.com/@ivy_ipm" target="_blank">YouTube</a>
 </div>
-<div class="desc">hey, im ivy, i like modding games and i love cats, uh make sure to subscribe to me on yt and u can view my repos if u want!</div>
+<div class="desc">hey, im ivy, i like modding games and i love cats, uh make sure to subscribe to me on yt and u can view my repos if you want!</div>
 </div>
 </div>
 
 <script>
 let started=false
-
-document.body.addEventListener("click",()=>{
+const intro=document.getElementById('intro')
+intro.addEventListener("click",()=>{
 if(started)return
 started=true
-
 const v=document.getElementById("bg-video")
 const a=document.getElementById("bg-music")
-const intro=document.getElementById("intro")
 const main=document.getElementById("main")
-
 v.style.display="block"
 main.style.display="flex"
 setTimeout(()=>{main.style.opacity="1"},50)
-
 v.play().catch(()=>{})
+a.muted=false
 a.volume=0.5
 a.play().catch(()=>{})
-
 intro.remove()
 })
 
+// typewriter rainbow for header & page title
 const text="ivy.ipm"
 const colors=["#ff0000","#ff7f00","#ffff00","#00ff00","#0000ff","#4b0082","#8b00ff"]
 let i=0
@@ -83,6 +81,18 @@ i++
 setTimeout(type,150)
 }}
 type()
+
+// intro typewriter
+const introText="click here to enter…"
+const introSpan=document.querySelector("#intro span")
+let idx=0
+function typeIntro(){
+if(idx<introText.length){
+introSpan.textContent+=introText[idx]
+idx++
+setTimeout(typeIntro,100)
+}}
+typeIntro()
 </script>
 
 </body>
