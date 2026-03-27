@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ivy.ipm</title>
+<title></title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
@@ -36,7 +36,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 
 <div id="intro"><span></span></div>
 
-<video id="bg-video" muted loop playsinline>
+<video id="bg-video" muted playsinline loop>
   <source src="https://cdn.pixabay.com/vimeo/599784397/Beach%20Waves%20Loop%20-%2019143.mp4?width=1280&amp;hash=3fdaf811a68bf1f4409c72042a64d3a68f691486" type="video/mp4">
 </video>
 
@@ -44,7 +44,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
   <div class="card">
     <div class="banner"></div>
     <div class="profile-pic"></div>
-    <div class="rainbow-header" id="header">ivy.ipm</div>
+    <div class="rainbow-header" id="header"></div>
     <div class="discord-name">@ivy.ipm <span class="guild-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 8H9L12 2ZM12 22L9 16H15L12 22ZM2 12L8 15V9L2 12ZM22 12L16 9V15L22 12Z"/></svg> stuf</span></div>
     <div class="links">
       <a href="https://github.com/ivy-ipm" target="_blank" class="github">GitHub</a>
@@ -62,40 +62,36 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
   <source src="https://pixabay.com/static/uploads/audio/2025/07/21/soft-calm-background-music-376497.mp3" type="audio/mpeg">
 </audio>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-// Rainbow typewriter header
-const headerText = "ivy.ipm";
-const headerEl = document.getElementById("header");
-const colors = ["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
-let hIndex = 0;
-function rainbowType(){
-    if(hIndex<headerText.length){
-        const span = document.createElement("span");
-        span.textContent = headerText[hIndex];
-        span.style.color = colors[hIndex % colors.length];
-        headerEl.appendChild(span);
-        hIndex++;
-        setTimeout(rainbowType,200);
+// Rainbow typewriter function (works for header and tab title)
+function rainbowTypewriter(element, text, interval, colors){
+    let i = 0;
+    const spanArray = [];
+    function step(){
+        if(i < text.length){
+            const span = document.createElement('span');
+            span.textContent = text[i];
+            span.style.color = colors[i % colors.length];
+            if(element.tagName === 'TITLE'){
+                document.title += text[i];
+            } else {
+                element.appendChild(span);
+            }
+            i++;
+            setTimeout(step, interval);
+        }
     }
+    step();
 }
-rainbowType();
 
-// Firebase setup
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+// Colors for rainbow
+const colors = ["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
+// Apply typewriter rainbow to page header
+rainbowTypewriter(document.getElementById('header'), "ivy.ipm", 200, colors);
+// Apply typewriter rainbow to tab title
+rainbowTypewriter(document.querySelector('title'), "ivy.ipm", 300, colors);
 
-// Intro typewriter
+// Intro typewriter text
 const introText = "click here to enter…";
 const introSpan = document.querySelector("#intro span");
 let idx=0;
@@ -108,7 +104,7 @@ function typeWriter(){
 }
 typeWriter();
 
-// Click intro
+// Click to enter
 const bgVideo = document.getElementById('bg-video');
 const bgMusic = document.getElementById('bg-music');
 const cardContainer = document.querySelector('.card-container');
@@ -120,18 +116,7 @@ document.getElementById('intro').addEventListener('click', async ()=>{
   document.getElementById('intro').remove();
   cardContainer.style.display='flex';
   setTimeout(()=>{ cardContainer.style.opacity='1'; },50);
-  updateCounters();
 });
-
-// Firebase counters
-function updateCounters(){
-  const viewsRef = db.ref('profile/views');
-  const visitorsRef = db.ref('profile/visitors');
-  viewsRef.transaction(current => (current||0)+1);
-  visitorsRef.transaction(current => (current||0)+1);
-  viewsRef.on('value',snap=>{document.getElementById('views').textContent = snap.val();});
-  visitorsRef.on('value',snap=>{document.getElementById('visitors').textContent = snap.val();});
-}
 </script>
 </body>
 </html>
