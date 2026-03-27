@@ -9,20 +9,21 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body, html{width:100%;height:100%;overflow:hidden;}
 body{
-  background:#000;
   cursor: url('https://i.imgur.com/0W3vZgJ.png'), auto;
 }
+#bg-video{
+  position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;
+}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:-1;}
 #intro{
-  width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;text-transform:lowercase;
 }
 #intro span{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;}
-.card-container{display:none;width:100%;height:100%;align-items:center;justify-content:center;position:relative;}
-.overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);}
+.card-container{display:none;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;height:100%;position:relative;padding-top:30px;gap:20px;overflow-y:auto;}
 .card{
   position: relative; width:360px;border-radius:20px;overflow:hidden;
   background: rgba(20,20,20,0.7); backdrop-filter: blur(10px);
   box-shadow:0 0 40px rgba(0,0,0,0.6); text-align:center; padding-bottom:20px;
-  z-index:10;
 }
 .banner{width:100%; height:130px; background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;}
 .profile-pic{width:100px;height:100px;border-radius:50%;border:4px solid #fff;margin:-50px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') no-repeat center/cover;}
@@ -39,13 +40,23 @@ body{
 .stats{display:flex;justify-content:space-around;margin-top:15px;}
 .stat{text-align:center;}
 .stat span{display:block;font-size:1.1rem;font-weight:600;}
+.feedback-card{width:360px;background:rgba(20,20,20,0.7);border-radius:15px;padding:15px;color:#fff;display:flex;flex-direction:column;gap:10px;}
+.feedback-card h3{margin-bottom:5px;text-align:center;}
+#feedback-list{max-height:200px;overflow-y:auto;padding:5px;border:1px solid #555;border-radius:8px;}
+#feedback-list div{padding:5px;border-bottom:1px solid #444;}
+#feedback-input{padding:8px;border-radius:8px;border:none;outline:none;width:calc(100% - 10px);}
+#feedback-submit{margin-top:5px;padding:8px;border:none;border-radius:8px;background:#1DA1F2;color:#fff;cursor:pointer;}
 audio{display:none;}
 </style>
 </head>
 <body>
+<video id="bg-video" autoplay muted loop>
+  <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
 <div id="intro"><span></span></div>
+
 <div class="card-container">
-  <div class="overlay"></div>
   <div class="card">
     <div class="banner"></div>
     <div class="profile-pic"></div>
@@ -61,10 +72,19 @@ audio{display:none;}
       <div class="stat"><span id="visitors">0</span>Visitors</div>
     </div>
   </div>
+
+  <div class="feedback-card">
+    <h3>Feedback</h3>
+    <div id="feedback-list"></div>
+    <input type="text" id="feedback-input" placeholder="Enter your feedback">
+    <button id="feedback-submit">Submit</button>
+  </div>
 </div>
+
 <audio autoplay loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg">
 </audio>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
@@ -79,7 +99,8 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-const introText = "Click here to enter…";
+
+const introText = "click here to enter…";
 const introSpan = document.querySelector("#intro span");
 let i=0;
 function typeWriter(){ if(i<introText.length){ introSpan.textContent+=introText.charAt(i); i++; setTimeout(typeWriter,100); } }
@@ -88,7 +109,9 @@ document.getElementById('intro').addEventListener('click',()=>{
   document.getElementById('intro').style.display='none';
   document.querySelector('.card-container').style.display='flex';
   updateCounters();
+  loadFeedback();
 });
+
 function updateCounters(){
   const viewsRef = db.ref('profile/views');
   const visitorsRef = db.ref('profile/visitors');
@@ -96,6 +119,29 @@ function updateCounters(){
   visitorsRef.transaction(current => (current||0)+1);
   viewsRef.on('value',snap=>{document.getElementById('views').textContent = snap.val();});
   visitorsRef.on('value',snap=>{document.getElementById('visitors').textContent = snap.val();});
+}
+
+const feedbackInput = document.getElementById('feedback-input');
+const feedbackSubmit = document.getElementById('feedback-submit');
+const feedbackList = document.getElementById('feedback-list');
+
+feedbackSubmit.addEventListener('click',()=>{
+  const val = feedbackInput.value.trim();
+  if(val!==""){
+    db.ref('feedback').push(val);
+    feedbackInput.value='';
+  }
+});
+
+function loadFeedback(){
+  db.ref('feedback').on('value',snap=>{
+    feedbackList.innerHTML='';
+    snap.forEach(child=>{
+      const div=document.createElement('div');
+      div.textContent=child.val();
+      feedbackList.appendChild(div);
+    });
+  });
 }
 </script>
 </body>
