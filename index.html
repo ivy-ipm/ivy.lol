@@ -8,109 +8,82 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;}
-body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
-#intro{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;text-transform:lowercase;background:#000;position:fixed;top:0;left:0;z-index:10;cursor:pointer;}
-#intro span{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;}
-#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;display:none;}
-.card-container{display:none;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;height:100%;position:relative;padding-top:30px;gap:20px;overflow-y:auto;opacity:0;transition:opacity 1s;z-index:1;}
-.card{position:relative;width:360px;border-radius:20px;overflow:hidden;background:rgba(20,20,20,0.7);backdrop-filter:blur(10px);box-shadow:0 0 40px rgba(0,0,0,0.6);text-align:center;padding-bottom:20px;}
-.banner{width:100%;height:130px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;}
-.profile-pic{width:100px;height:100px;border-radius:50%;border:4px solid #fff;margin:-50px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') no-repeat center/cover;background-size:cover;}
-.rainbow-header{font-size:1.5rem;font-weight:600;margin-bottom:5px;display:inline-block;}
-.discord-name{font-size:0.9rem;color:#ccc;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:5px;}
-.guild-tag{display:flex;align-items:center;gap:3px;color:#ffcc00;font-weight:500;}
-.guild-tag svg{width:14px;height:14px;}
-.links{display:flex;justify-content:center;gap:15px;margin-bottom:10px;}
-.links a{text-decoration:none;font-size:0.9rem;padding:5px 12px;border-radius:6px;color:#fff;background:rgba(255,255,255,0.1);transition:0.2s;}
-.links a:hover{background:rgba(255,255,255,0.3);}
-.youtube{background:#FF0000;color:#fff;}
-.github{background:#333;color:#fff;}
-.description{font-size:0.85rem;color:#ddd;padding:0 15px;margin-top:10px;}
-.stats{display:flex;justify-content:space-around;margin-top:15px;}
-.stat{text-align:center;}
-.stat span{display:block;font-size:1.1rem;font-weight:600;}
+#intro{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;z-index:10;cursor:pointer;}
+#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;display:none;z-index:0;}
+.card-container{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;z-index:1;position:relative;opacity:0;transition:1s;}
+.card{width:340px;border-radius:20px;background:rgba(20,20,20,0.7);backdrop-filter:blur(10px);text-align:center;padding-bottom:20px;}
+.banner{height:120px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') center/cover;}
+.profile{width:90px;height:90px;border-radius:50%;margin:-45px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') center/cover;border:3px solid #fff;}
+.header{font-size:1.5rem;font-weight:600;}
+.links{display:flex;gap:10px;justify-content:center;margin:10px 0;}
+.links a{padding:6px 12px;border-radius:6px;background:#222;color:#fff;text-decoration:none;font-size:.9rem;}
+.desc{font-size:.85rem;color:#ccc;padding:0 10px;}
 </style>
 </head>
 <body>
 
-<div id="intro"><span></span></div>
+<div id="intro">click here to enter…</div>
 
-<video id="bg-video" muted loop playsinline>
-  <source src="https://cdn.pixabay.com/vimeo/599784397/Beach%20Waves%20Loop%20-%2019143.mp4?width=1280&amp;hash=3fdaf811a68bf1f4409c72042a64d3a68f691486" type="video/mp4">
+<video id="bg-video" loop muted playsinline>
+<source src="https://cdn.pixabay.com/vimeo/599784397/Beach%20Waves%20Loop%20-%2019143.mp4?width=1280&hash=3fdaf811a68bf1f4409c72042a64d3a68f691486" type="video/mp4">
 </video>
 
-<div class="card-container">
-  <div class="card">
-    <div class="banner"></div>
-    <div class="profile-pic"></div>
-    <div class="rainbow-header" id="header"></div>
-    <div class="discord-name">@ivy.ipm <span class="guild-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 8H9L12 2ZM12 22L9 16H15L12 22ZM2 12L8 15V9L2 12ZM22 12L16 9V15L22 12Z"/></svg> stuf</span></div>
-    <div class="links">
-      <a href="https://github.com/ivy-ipm" target="_blank" class="github">GitHub</a>
-      <a href="https://m.youtube.com/@ivy_ipm" target="_blank" class="youtube">YouTube</a>
-    </div>
-    <div class="description">hey, im ivy, i like modding games and i love cats, uh make sure to subscribe to me on yt and u can view my repos if you want!</div>
-    <div class="stats">
-      <div class="stat"><span id="views">0</span>Profile Views</div>
-      <div class="stat"><span id="visitors">0</span>Visitors</div>
-    </div>
-  </div>
-</div>
-
 <audio id="bg-music" loop>
-  <source src="https://pixabay.com/static/uploads/audio/2025/07/21/soft-calm-background-music-376497.mp3" type="audio/mpeg">
+<source src="https://pixabay.com/static/uploads/audio/2025/07/21/soft-calm-background-music-376497.mp3" type="audio/mpeg">
 </audio>
 
+<div class="card-container" id="main">
+<div class="card">
+<div class="banner"></div>
+<div class="profile"></div>
+<div class="header" id="header"></div>
+<div>@ivy.ipm</div>
+<div class="links">
+<a href="https://github.com/ivy-ipm" target="_blank">GitHub</a>
+<a href="https://m.youtube.com/@ivy_ipm" target="_blank">YouTube</a>
+</div>
+<div class="desc">hey, im ivy, i like modding games and i love cats, uh make sure to subscribe to me on yt and u can view my repos if u want!</div>
+</div>
+</div>
+
 <script>
-// Rainbow typewriter
-function rainbowTypewriter(element, text, interval, colors){
-    let i=0;
-    function step(){
-        if(i<text.length){
-            const span=document.createElement('span');
-            span.textContent=text[i];
-            span.style.color=colors[i%colors.length];
-            if(element.tagName==='TITLE'){document.title+=text[i];} else {element.appendChild(span);}
-            i++;
-            setTimeout(step,interval);
-        }
-    }
-    step();
-}
-const colors=["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
-rainbowTypewriter(document.getElementById('header'),"ivy.ipm",200,colors);
-rainbowTypewriter(document.querySelector('title'),"ivy.ipm",300,colors);
+let started=false
 
-// Intro typewriter
-const introText="click here to enter…";
-const introSpan=document.querySelector("#intro span");
-let idx=0;
-function typeWriter(){ if(idx<introText.length){ introSpan.textContent+=introText.charAt(idx); idx++; setTimeout(typeWriter,100); } }
-typeWriter();
+document.body.addEventListener("click",()=>{
+if(started)return
+started=true
 
-const intro=document.getElementById('intro');
-intro.addEventListener('click', ()=>{
-    const bgVideo=document.getElementById('bg-video');
-    const bgMusic=document.getElementById('bg-music');
-    const cardContainer=document.querySelector('.card-container');
+const v=document.getElementById("bg-video")
+const a=document.getElementById("bg-music")
+const intro=document.getElementById("intro")
+const main=document.getElementById("main")
 
-    // Show everything first
-    bgVideo.style.display='block';
-    cardContainer.style.display='flex';
-    setTimeout(()=>{ cardContainer.style.opacity='1'; },50);
+v.style.display="block"
+main.style.display="flex"
+setTimeout(()=>{main.style.opacity="1"},50)
 
-    // Play video (muted) and audio (after click)
-    bgVideo.muted=true;
-    const playVideo = bgVideo.play();
-    if(playVideo !== undefined) playVideo.catch(()=>{});
+v.play().catch(()=>{})
+a.volume=0.5
+a.play().catch(()=>{})
 
-    bgMusic.volume=0.5;
-    const playAudio = bgMusic.play();
-    if(playAudio !== undefined) playAudio.catch(()=>{});
+intro.remove()
+})
 
-    // Remove intro AFTER triggering play
-    setTimeout(()=>{ intro.remove(); },50);
-});
+const text="ivy.ipm"
+const colors=["#ff0000","#ff7f00","#ffff00","#00ff00","#0000ff","#4b0082","#8b00ff"]
+let i=0
+function type(){
+if(i<text.length){
+const span=document.createElement("span")
+span.textContent=text[i]
+span.style.color=colors[i%colors.length]
+document.getElementById("header").appendChild(span)
+document.title+=text[i]
+i++
+setTimeout(type,150)
+}}
+type()
 </script>
+
 </body>
 </html>
