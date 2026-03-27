@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ivy.ipm</title>
+<title></title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
@@ -36,7 +36,6 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 <div id="intro"><span></span></div>
 
 <video id="bg-video" muted loop playsinline>
-  <!-- Replace this source with a calm nature/waves video you download from Pixabay or Pexels -->
   <source src="https://cdn.pixabay.com/vimeo/599784397/Beach%20Waves%20Loop%20-%2019143.mp4?width=1280&amp;hash=3fdaf811a68bf1f4409c72042a64d3a68f691486" type="video/mp4">
 </video>
 
@@ -59,13 +58,27 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 </div>
 
 <audio id="bg-music" loop>
-  <!-- Replace this source with a calm background track you download (e.g., from Pixabay calm music) -->
   <source src="https://pixabay.com/static/uploads/audio/2025/07/21/soft-calm-background-music-376497.mp3" type="audio/mpeg">
 </audio>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
+// Rainbow typewriter for page title
+const titleText = "ivy.ipm";
+let titleIndex = 0;
+const colors = ["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
+function rainbowTitle(){
+  let display = "";
+  for(let i=0;i<=titleIndex;i++){
+    display += `<span style="color:${colors[i % colors.length]}">${titleText[i]}</span>`;
+  }
+  document.title = titleText.substring(0,titleIndex+1); // fallback text in tab
+  titleIndex++;
+  if(titleIndex<titleText.length){ setTimeout(rainbowTitle,400); } else { titleIndex=0; setTimeout(rainbowTitle,1000); }
+}
+rainbowTitle();
+
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
