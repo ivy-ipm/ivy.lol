@@ -25,11 +25,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 
 <div id="intro"><span></span></div>
 
-<video id="bg-video" loop muted playsinline>
+<video id="bg-video" loop muted playsinline preload="auto">
 <source src="https://cdn.pixabay.com/vimeo/617986918/Calm-Ocean-Waves-Loop-1920x1080.mp4?width=1280&hash=bbd7b9188e3f9f57b9f8c5d73b50c5a0a9f3d2d2" type="video/mp4">
 </video>
 
-<audio id="bg-music" loop>
+<audio id="bg-music" loop preload="auto">
 <source src="https://pixabay.com/static/uploads/audio/2022/03/04/soft-relaxing-ambient-music-10923.mp3" type="audio/mpeg">
 </audio>
 
@@ -49,8 +49,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 
 <script>
 let started=false
+const intro=document.getElementById('intro')
+const v=document.getElementById("bg-video")
+const a=document.getElementById("bg-music")
+const main=document.getElementById("main")
 
-// Intro typewriter
+// intro typewriter
 const introText="click here to enter…"
 const introSpan=document.querySelector("#intro span")
 let idx=0
@@ -62,7 +66,7 @@ setTimeout(typeIntro,100)
 }}
 typeIntro()
 
-// Rainbow header typewriter
+// rainbow header typewriter
 const text="ivy.ipm"
 const colors=["#ff0000","#ff7f00","#ffff00","#00ff00","#0000ff","#4b0082","#8b00ff"]
 let i=0
@@ -78,22 +82,20 @@ setTimeout(typeHeader,150)
 }}
 typeHeader()
 
-// Main click to start
-const intro=document.getElementById('intro')
+// click to start everything
 intro.addEventListener("click",()=>{
 if(started)return
 started=true
-const v=document.getElementById("bg-video")
-const a=document.getElementById("bg-music")
-const main=document.getElementById("main")
+
 v.style.display="block"
 main.style.display="flex"
 setTimeout(()=>{main.style.opacity="1"},50)
 
-// Play video & audio inside same click
-v.play().catch(()=>{})
-a.volume=0.5
-a.play().catch(()=>{})
+// Play video first
+v.play().then(()=>{
+  a.volume=0.5
+  a.play().catch(()=>{})
+}).catch(()=>{})
 
 intro.remove()
 })
