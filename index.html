@@ -10,7 +10,7 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 #intro{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;position:fixed;top:0;left:0;z-index:10;font-size:1.1rem;text-transform:lowercase;}
 #intro span{border-right:2px solid #fff;}
-#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;display:none;z-index:0;}
+body.active{background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') center/cover no-repeat;}
 .card-container{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;position:relative;opacity:0;transition:1s;z-index:1;}
 .card{width:340px;border-radius:20px;background:rgba(20,20,20,0.7);backdrop-filter:blur(10px);text-align:center;padding-bottom:20px;}
 .banner{height:120px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') center/cover;}
@@ -24,10 +24,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 <body>
 
 <div id="intro"><span></span></div>
-
-<video id="bg-video" loop muted playsinline preload="auto">
-<source src="https://cdn.pixabay.com/vimeo/617986918/Calm-Ocean-Waves-Loop-1920x1080.mp4?width=1280&hash=bbd7b9188e3f9f57b9f8c5d73b50c5a0a9f3d2d2" type="video/mp4">
-</video>
 
 <audio id="bg-music" loop preload="auto">
 <source src="https://pixabay.com/static/uploads/audio/2022/03/04/soft-relaxing-ambient-music-10923.mp3" type="audio/mpeg">
@@ -49,10 +45,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;}
 
 <script>
 let started=false
-const intro=document.getElementById('intro')
-const v=document.getElementById("bg-video")
-const a=document.getElementById("bg-music")
-const main=document.getElementById("main")
 
 // intro typewriter
 const introText="click here to enter…"
@@ -82,21 +74,18 @@ setTimeout(typeHeader,150)
 }}
 typeHeader()
 
-// click to start everything
+// click to start
+const intro=document.getElementById('intro')
 intro.addEventListener("click",()=>{
 if(started)return
 started=true
-
-v.style.display="block"
+document.body.classList.add("active")
+const a=document.getElementById("bg-music")
+const main=document.getElementById("main")
 main.style.display="flex"
 setTimeout(()=>{main.style.opacity="1"},50)
-
-// Play video first
-v.play().then(()=>{
-  a.volume=0.5
-  a.play().catch(()=>{})
-}).catch(()=>{})
-
+a.volume=0.5
+a.play().catch(()=>{})
 intro.remove()
 })
 </script>
