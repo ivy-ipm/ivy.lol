@@ -16,7 +16,6 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 .card{position:relative;width:360px;border-radius:20px;overflow:hidden;background:rgba(20,20,20,0.7);backdrop-filter:blur(10px);box-shadow:0 0 40px rgba(0,0,0,0.6);text-align:center;padding-bottom:20px;}
 .banner{width:100%;height:130px;background:url('https://i.pinimg.com/736x/cc/9b/6d/cc9b6d0616f6db885d1933645f6c2981.jpg') no-repeat center/cover;}
 .profile-pic{width:100px;height:100px;border-radius:50%;border:4px solid #fff;margin:-50px auto 10px;background:url('https://i.pinimg.com/736x/bc/8b/9b/bc8b9bb182061ddcecc0c2b919b53523.jpg') no-repeat center/cover;background-size:cover;}
-.username{font-size:1.4rem;font-weight:600;margin-bottom:5px;}
 .rainbow-header{font-size:1.5rem;font-weight:600;margin-bottom:5px;display:inline-block;}
 .discord-name{font-size:0.9rem;color:#ccc;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:5px;}
 .guild-tag{display:flex;align-items:center;gap:3px;color:#ffcc00;font-weight:500;}
@@ -36,7 +35,7 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 
 <div id="intro"><span></span></div>
 
-<video id="bg-video" muted playsinline loop>
+<video id="bg-video" muted loop playsinline>
   <source src="https://cdn.pixabay.com/vimeo/599784397/Beach%20Waves%20Loop%20-%2019143.mp4?width=1280&amp;hash=3fdaf811a68bf1f4409c72042a64d3a68f691486" type="video/mp4">
 </video>
 
@@ -63,55 +62,46 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 </audio>
 
 <script>
-// Rainbow typewriter function for header & tab title
+// Rainbow typewriter for header & tab
 function rainbowTypewriter(element, text, interval, colors){
     let i = 0;
     function step(){
         if(i<text.length){
-            const span = document.createElement('span');
-            span.textContent = text[i];
-            span.style.color = colors[i % colors.length];
-            if(element.tagName==='TITLE'){
-                document.title += text[i];
-            } else {
-                element.appendChild(span);
-            }
+            const span=document.createElement('span');
+            span.textContent=text[i];
+            span.style.color=colors[i % colors.length];
+            if(element.tagName==='TITLE'){document.title+=text[i];}else{element.appendChild(span);}
             i++;
             setTimeout(step, interval);
         }
     }
     step();
 }
-
-const colors = ["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
+const colors=["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
 rainbowTypewriter(document.getElementById('header'),"ivy.ipm",200,colors);
 rainbowTypewriter(document.querySelector('title'),"ivy.ipm",300,colors);
 
 // Intro typewriter
-const introText = "click here to enter…";
-const introSpan = document.querySelector("#intro span");
+const introText="click here to enter…";
+const introSpan=document.querySelector("#intro span");
 let idx=0;
-function typeWriter(){ 
-  if(idx<introText.length){ 
-    introSpan.textContent+=introText.charAt(idx); 
-    idx++; 
-    setTimeout(typeWriter,100); 
-  } 
-}
+function typeWriter(){ if(idx<introText.length){ introSpan.textContent+=introText.charAt(idx); idx++; setTimeout(typeWriter,100); } }
 typeWriter();
 
-// Click works immediately
-const bgVideo = document.getElementById('bg-video');
-const bgMusic = document.getElementById('bg-music');
-const cardContainer = document.querySelector('.card-container');
+// Click works immediately & forces play
+const intro=document.getElementById('intro');
+const bgVideo=document.getElementById('bg-video');
+const bgMusic=document.getElementById('bg-music');
+const cardContainer=document.querySelector('.card-container');
 
-document.getElementById('intro').addEventListener('click', async ()=>{
-  bgVideo.style.display='block';
-  cardContainer.style.display='flex';
-  setTimeout(()=>{ cardContainer.style.opacity='1'; },50);
-  document.getElementById('intro').remove();
-  try{ await bgVideo.play(); } catch(e){}
-  try{ await bgMusic.play(); } catch(e){}
+intro.addEventListener('click',()=>{
+    bgVideo.style.display='block';
+    cardContainer.style.display='flex';
+    setTimeout(()=>{ cardContainer.style.opacity='1'; },50);
+    intro.remove();
+    bgVideo.muted=true;
+    bgVideo.play().catch(()=>{});
+    bgMusic.play().catch(()=>{});
 });
 </script>
 </body>
