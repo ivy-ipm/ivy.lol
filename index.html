@@ -63,16 +63,15 @@ body{cursor:url('https://i.imgur.com/0W3vZgJ.png'), auto;}
 </audio>
 
 <script>
-// Rainbow typewriter function (works for header and tab title)
+// Rainbow typewriter function for header & tab title
 function rainbowTypewriter(element, text, interval, colors){
     let i = 0;
-    const spanArray = [];
     function step(){
-        if(i < text.length){
+        if(i<text.length){
             const span = document.createElement('span');
             span.textContent = text[i];
             span.style.color = colors[i % colors.length];
-            if(element.tagName === 'TITLE'){
+            if(element.tagName==='TITLE'){
                 document.title += text[i];
             } else {
                 element.appendChild(span);
@@ -84,14 +83,11 @@ function rainbowTypewriter(element, text, interval, colors){
     step();
 }
 
-// Colors for rainbow
 const colors = ["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
-// Apply typewriter rainbow to page header
-rainbowTypewriter(document.getElementById('header'), "ivy.ipm", 200, colors);
-// Apply typewriter rainbow to tab title
-rainbowTypewriter(document.querySelector('title'), "ivy.ipm", 300, colors);
+rainbowTypewriter(document.getElementById('header'),"ivy.ipm",200,colors);
+rainbowTypewriter(document.querySelector('title'),"ivy.ipm",300,colors);
 
-// Intro typewriter text
+// Intro typewriter
 const introText = "click here to enter…";
 const introSpan = document.querySelector("#intro span");
 let idx=0;
@@ -104,18 +100,18 @@ function typeWriter(){
 }
 typeWriter();
 
-// Click to enter
+// Click works immediately
 const bgVideo = document.getElementById('bg-video');
 const bgMusic = document.getElementById('bg-music');
 const cardContainer = document.querySelector('.card-container');
 
 document.getElementById('intro').addEventListener('click', async ()=>{
   bgVideo.style.display='block';
-  try { await bgVideo.play(); } catch(e){}
-  try { await bgMusic.play(); } catch(e){}
-  document.getElementById('intro').remove();
   cardContainer.style.display='flex';
   setTimeout(()=>{ cardContainer.style.opacity='1'; },50);
+  document.getElementById('intro').remove();
+  try{ await bgVideo.play(); } catch(e){}
+  try{ await bgMusic.play(); } catch(e){}
 });
 </script>
 </body>
